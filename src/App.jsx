@@ -24,12 +24,32 @@ function AnimatedPhoto({frames, className, isBw}){
 function App() {
   const [count, setCount] = useState(0)
   const webcamRef = useRef(null);
+  const [isFading, setIsFading] = useState(false);
+  const [isStripVisible, setIsStripVisible] = useState(false);
   const [countdownText, setCountdownText] = useState("");
   const [capturedImages, setCapturedImages] = useState([]);
   const [isFinished , setIsFinished] = useState(false);
   const [isRevealed, setIsRevealed] = useState(false);
   const [isBw, setIsBw] = useState(false)
+  const [isPhotoVisible, setIsPhotoVisible] = useState(false);
   const stripRef = useRef(null);
+  useEffect(() => {
+    if (isFinished) {
+      const timer = setTimeout(() => setIsStripVisible(true), 50);
+      return () => clearTimeout(timer);
+    } else {
+      setIsStripVisible(false);
+    }
+  }, [isFinished]);
+  useEffect(() => {
+    if (isRevealed) {
+      setIsPhotoVisible(false);
+      const timer = setTimeout(() => setIsPhotoVisible(true), 50);
+      return () => clearTimeout(timer);
+    } else {
+      setIsStripVisible(false);
+    }
+  }, [isRevealed]);
 
   const downloadPhotostrip = async () => {
     const numFrames = capturedImages[0]?.length || 0;
@@ -69,7 +89,9 @@ function App() {
           const img = new Image();
           img.src = frameSrc;
           img.onload = () => {
+            ctx.filter = isBw ? 'grayscale(100%)' : 'none';
             ctx.drawImage(img, padding, yOffset, imgWidth, imgHeight);
+            ctx.filter = 'none';
             resolve();
           };
         });
@@ -107,18 +129,24 @@ function App() {
   }
   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
   const countdown = async () =>{
+    setIsFading(false);
     setIsFinished(false);
+    setIsFading(false);
     setCapturedImages([]);
     for (let i = 3; i > 0; i--) {
       for (let z = 3; z > 0; z--) {
         setCountdownText(z.toString());
         await delay(1000);
       }
+      setCountdownText("");
       const capturedFrames = await capture();
       setCapturedImages((prev) => [...prev, capturedFrames]);
       setCountdownText("");
     }
+    setIsFading(true);
+    await delay(500); 
     setIsFinished(true);
+    setIsFading(false);
   }
   const capture = async () => {
     const frames = [];
@@ -148,10 +176,11 @@ function App() {
             <h1 className="text-[#F4EFE5] opacity-50 text-3xl">"not all those who wander are lost"</h1>
             <h1 className="text-[#F4EFE5] opacity-50">-J.R.R. Tolkein</h1>
           </div>
-          <div className="w-[600px] flex flex-col items-center justify-center mt-6">
+          <div className={`w-[600px] flex flex-col items-center justify-center mt-6 transition-opacity duration-500 ease-in-out ${isFading ? 'opacity-0' : 'opacity-100'}`}>
           {isFinished ? (
-            isRevealed ? (
-              <div className = "flex flex-col">
+            <div className={`w-full flex flex-col items-center justify-center transition-opacity duration-700 ease-in-out ${isStripVisible ? 'opacity-100' : 'opacity-0'}`}>
+            {isRevealed ? (
+              <div className ={`flex flex-col transition-opacity duration-800 ease-in-out ${isPhotoVisible ? 'opacity-100' : 'opacity-0'}`}>
                 <button
                     onClick={downloadPhotostrip} 
                     className=" mb-3 h-12 transition-transform duration-300 ease-in-out hover:scale-110 text-[#F4EFE5] text-2xl outline outline-2 p-2 px-9 rounded-xl "
@@ -170,11 +199,12 @@ function App() {
               </div>
             ) : (
               <button onClick = {revealImages} className = "transition-transform duration-300 ease-in-out hover:scale-110 text-[#F4EFE5] text-2xl outline outline-2 p-2 px-9 rounded-xl">ready for the reveal?</button>
-            )
+            )}
+            </div>
           ) : (
             <div className="flex flex-col items-center justify-center mt-9">
               <div className="relative">
-                <Webcam audio={false} ref={webcamRef} mirrored={true} screenshotFormat="image/jpeg" className={`w-[600px] h-[400px] object-cover${isBw ? 'grayscale' : ''}`} />
+                <Webcam audio={false} ref={webcamRef} mirrored={true} screenshotFormat="image/jpeg" className={`w-[600px] h-[400px] object-cover ${isBw ? 'grayscale' : ''}`} />
                 {countdownText && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black/40 text-white text-6xl font-bold rounded">
                   {countdownText}
