@@ -203,7 +203,7 @@ function App() {
           ) : (
             <div className="flex flex-col items-center justify-center mt-9">
               <div className="relative">
-                <Webcam audio={false} ref={webcamRef} mirrored={true} screenshotFormat="image/jpeg" className={`w-[600px] h-[400px] object-cover ${isBw ? 'grayscale' : ''}`} />
+                <Webcam audio={false} ref={webcamRef} mirrored={true} screenshotFormat="image/jpeg" className={`w-[600px] h-[400px] rounded-lg object-cover ${isBw ? 'grayscale' : ''}`} />
                 {countdownText && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black/40 text-white text-6xl font-bold rounded">
                   {countdownText}
