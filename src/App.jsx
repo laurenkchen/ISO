@@ -171,7 +171,7 @@ function App() {
           <h1 className="py-2 text-9xl text-[#F4EFE5] italic">ISO</h1>
           <p className="py-2 pb-16 text-2xl text-[#F4EFE5]">A photobooth, but with gifs</p>
         </div>
-        <div className="flex flex-col ml-16 mt-9 pl-9 items-center">
+        <div className="flex flex-col ml-16 mt-8 pl-9 items-center">
           <div className="text-center  justify-center">
             <h1 className="text-[#F4EFE5] opacity-50 text-3xl">"not all those who wander are lost"</h1>
             <h1 className="text-[#F4EFE5] opacity-50">-J.R.R. Tolkein</h1>
