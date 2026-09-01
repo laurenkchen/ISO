@@ -163,7 +163,6 @@ function App() {
   };
   return (
     <>
-      <link rel="icon" href={"public/si.png"} />
       <title>ISO Photobooth</title>
       <div className="flex p-6 h-screen w-full bg-[url('./assets/clouds.jpeg')]  bg-cover bg-center bg-no-repeat font-[Libre-Baskerville]">
         <div className="flex pl-6 ml-8 flex-col justify-end ">
