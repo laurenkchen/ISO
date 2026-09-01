@@ -1,5 +1,6 @@
 {
   "name": "iso",
+  "homepage":"https://laurenkchen.github.io/ISO/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
