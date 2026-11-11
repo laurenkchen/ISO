@@ -1,16 +1,11 @@
-# React + Vite
+# ISO
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A photobooth which captures as a gif!
+This was built using React + Vite + tailwind css. 
+I spent quite a bit of time designing the UI for this, and took the cloud photo background myself :)
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# Usage
+1. Click start and wait for the countdown to take your photos
+2. Click download
+3. You'll be able to download a .gif file!
+ <img width="2766" height="1496" alt="Image" src="https://github.com/user-attachments/assets/0c9a5dd0-0b8e-4f99-8d5d-b0817d2960af" />
